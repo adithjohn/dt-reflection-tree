@@ -1,0 +1,437 @@
+[
+  {
+    "id": "START",
+    "type": "start",
+    "text": "Good evening. Let's take a structured look at your day."
+  },
+
+  {
+    "id": "A1_OPEN",
+    "parentId": "START",
+    "type": "question",
+    "text": "How would you describe your day overall?",
+    "options": ["Productive", "Mixed", "Frustrating", "Draining"]
+  },
+
+  {
+    "id": "A1_ROUTE",
+    "parentId": "A1_OPEN",
+    "type": "decision",
+    "rules": [
+      {
+        "if": "A1_OPEN.answer in ['Productive','Mixed']",
+        "goTo": "A1_Q1_BEHAVIOR"
+      },
+      {
+        "if": "A1_OPEN.answer in ['Frustrating','Draining']",
+        "goTo": "A1_Q1_BEHAVIOR_LOW"
+      }
+    ]
+  },
+
+  {
+    "id": "A1_Q1_BEHAVIOR",
+    "parentId": "A1_ROUTE",
+    "type": "question",
+    "text": "When something didn’t go as planned, what did you do first?",
+    "options": [
+      "Adjusted my approach",
+      "Waited for more clarity",
+      "Pushed through as is",
+      "Looked for help"
+    ],
+    "signal": [
+      "axis1:internal",
+      "axis1:external",
+      "axis1:external",
+      "axis1:internal"
+    ]
+  },
+
+  {
+    "id": "A1_Q1_BEHAVIOR_LOW",
+    "parentId": "A1_ROUTE",
+    "type": "question",
+    "text": "When things weren’t going well, what did you tend to do?",
+    "options": [
+      "Tried to regain control",
+      "Waited for things to change",
+      "Kept going without changing much",
+      "Looked for support"
+    ],
+    "signal": [
+      "axis1:internal",
+      "axis1:external",
+      "axis1:external",
+      "axis1:internal"
+    ]
+  },
+
+  {
+    "id": "A1_Q2_RESPONSE",
+    "parentId": "A1_Q1_BEHAVIOR",
+    "type": "question",
+    "text": "Think about a specific challenge. What best describes your response?",
+    "options": [
+      "I changed my approach",
+      "I kept trying the same thing",
+      "I paused and waited",
+      "I asked for help and moved forward"
+    ],
+    "signal": [
+      "axis1:internal",
+      "axis1:external",
+      "axis1:external",
+      "axis1:internal"
+    ]
+  },
+
+  {
+    "id": "A1_Q2_RESPONSE_LOW",
+    "parentId": "A1_Q1_BEHAVIOR_LOW",
+    "type": "question",
+    "text": "Think about a specific challenge. What best describes your response?",
+    "options": [
+      "I changed my approach",
+      "I kept trying the same thing",
+      "I paused and waited",
+      "I asked for help and moved forward"
+    ],
+    "signal": [
+      "axis1:internal",
+      "axis1:external",
+      "axis1:external",
+      "axis1:internal"
+    ]
+  },
+
+  {
+    "id": "A1_Q3_WHY",
+    "parentId": "A1_Q2_RESPONSE",
+    "type": "question",
+    "text": "What influenced that response the most?",
+    "options": [
+      "I knew what to do",
+      "I felt responsible",
+      "I wasn’t sure what to do",
+      "I didn’t feel it was my role"
+    ],
+    "signal": [
+      "axis1:internal",
+      "axis1:internal",
+      "axis1:external",
+      "axis1:external"
+    ]
+  },
+
+  {
+    "id": "A1_Q3_WHY_LOW",
+    "parentId": "A1_Q2_RESPONSE_LOW",
+    "type": "question",
+    "text": "What influenced that response the most?",
+    "options": [
+      "I knew what to do",
+      "I felt responsible",
+      "I wasn’t sure what to do",
+      "I didn’t feel it was my role"
+    ],
+    "signal": [
+      "axis1:internal",
+      "axis1:internal",
+      "axis1:external",
+      "axis1:external"
+    ]
+  },
+
+  {
+    "id": "A1_DECISION",
+    "parentId": "A1_Q3_WHY",
+    "type": "decision",
+    "rules": [
+      {
+        "if": "axis1.internal > axis1.external",
+        "goTo": "A1_R_INT"
+      },
+      {
+        "if": "axis1.internal < axis1.external",
+        "goTo": "A1_R_EXT"
+      },
+      {
+        "if": "axis1.internal == axis1.external",
+        "goTo": "A1_R_MIXED"
+      }
+    ]
+  },
+
+  {
+    "id": "A1_DECISION_LOW",
+    "parentId": "A1_Q3_WHY_LOW",
+    "type": "decision",
+    "rules": [
+      {
+        "if": "axis1.internal > axis1.external",
+        "goTo": "A1_R_INT"
+      },
+      {
+        "if": "axis1.internal < axis1.external",
+        "goTo": "A1_R_EXT"
+      },
+      {
+        "if": "axis1.internal == axis1.external",
+        "goTo": "A1_R_MIXED"
+      }
+    ]
+  },
+
+  {
+    "id": "A1_R_INT",
+    "type": "reflection",
+    "text": "You showed signs of taking control today — especially in how you responded to challenges."
+  },
+
+  {
+    "id": "A1_R_EXT",
+    "type": "reflection",
+    "text": "Much of today may have felt shaped by external factors. Even so, small choices were still within reach."
+  },
+
+  {
+    "id": "A1_R_MIXED",
+    "type": "reflection",
+    "text": "There were moments where you took control, and others where things felt outside your influence. Noticing both is where growth begins."
+  },
+
+  {
+    "id": "BRIDGE_1_2",
+    "parentId": "A1_R_INT",
+    "type": "bridge",
+    "text": "How you handled control often shapes how you show up for others. Let’s look at that."
+  },
+
+  {
+    "id": "BRIDGE_1_2_ALT1",
+    "parentId": "A1_R_EXT",
+    "type": "bridge",
+    "text": "How you handled control often shapes how you show up for others. Let’s look at that."
+  },
+
+  {
+    "id": "BRIDGE_1_2_ALT2",
+    "parentId": "A1_R_MIXED",
+    "type": "bridge",
+    "text": "How you handled control often shapes how you show up for others. Let’s look at that."
+  },
+
+  {
+    "id": "A2_Q1",
+    "parentId": "BRIDGE_1_2",
+    "type": "question",
+    "text": "In your interactions today, what best describes your approach?",
+    "options": [
+      "I stepped in where I could add value",
+      "I focused on completing my responsibilities well",
+      "I ensured I upheld my part while others handled theirs",
+      "I waited for clearer direction before acting"
+    ],
+    "signal": [
+      "axis2:contribution",
+      "axis2:neutral",
+      "axis2:entitlement",
+      "axis2:entitlement"
+    ]
+  },
+
+  {
+    "id": "A2_Q2",
+    "parentId": "A2_Q1",
+    "type": "question",
+    "text": "What best describes your effort beyond your responsibilities?",
+    "options": [
+      "I took initiative where needed",
+      "I did what was expected of me",
+      "I stayed within my defined scope",
+      "I waited for alignment before acting"
+    ],
+    "signal": [
+      "axis2:contribution",
+      "axis2:neutral",
+      "axis2:entitlement",
+      "axis2:entitlement"
+    ]
+  },
+
+  {
+    "id": "A2_Q3_WHY",
+    "parentId": "A2_Q2",
+    "type": "question",
+    "text": "What influenced that approach the most?",
+    "options": [
+      "I felt ownership of the outcome",
+      "I wanted to stay efficient",
+      "I didn’t feel responsible beyond my role",
+      "I needed more clarity"
+    ],
+    "signal": [
+      "axis2:contribution",
+      "axis2:neutral",
+      "axis2:entitlement",
+      "axis2:neutral"
+    ]
+  },
+
+  {
+    "id": "A2_DECISION",
+    "parentId": "A2_Q3_WHY",
+    "type": "decision",
+    "rules": [
+      {
+        "if": "axis2.contribution > axis2.entitlement",
+        "goTo": "A2_R_CONTRIB"
+      },
+      {
+        "if": "axis2.contribution < axis2.entitlement",
+        "goTo": "A2_R_ENT"
+      },
+      {
+        "if": "axis2.contribution == axis2.entitlement",
+        "goTo": "A2_R_NEUTRAL"
+      }
+    ]
+  },
+
+  {
+    "id": "A2_R_CONTRIB",
+    "type": "reflection",
+    "text": "You leaned toward contributing today — stepping beyond just your defined role when needed."
+  },
+
+  {
+    "id": "A2_R_ENT",
+    "type": "reflection",
+    "text": "Your approach stayed more within boundaries — focusing on what was expected rather than extending beyond it."
+  },
+
+  {
+    "id": "A2_R_NEUTRAL",
+    "type": "reflection",
+    "text": "Your effort stayed balanced within expectations. Contribution often begins just beyond what’s required."
+  },
+
+  {
+    "id": "BRIDGE_2_3",
+    "parentId": "A2_R_CONTRIB",
+    "type": "bridge",
+    "text": "Let’s widen the lens. Beyond your tasks — who else was affected by your work?"
+  },
+
+  {
+    "id": "A3_Q1",
+    "parentId": "BRIDGE_2_3",
+    "type": "question",
+    "text": "When you think about today, what felt most central?",
+    "options": [
+      "My tasks",
+      "My team",
+      "A colleague",
+      "The broader outcome"
+    ],
+    "signal": [
+      "axis3:self",
+      "axis3:team",
+      "axis3:individual",
+      "axis3:system"
+    ]
+  },
+
+  {
+    "id": "A3_Q2",
+    "parentId": "A3_Q1",
+    "type": "question",
+    "text": "Who did your actions impact the most today?",
+    "options": [
+      "Mostly myself",
+      "My team",
+      "A specific person",
+      "Customers or stakeholders"
+    ],
+    "signal": [
+      "axis3:self",
+      "axis3:team",
+      "axis3:individual",
+      "axis3:system"
+    ]
+  },
+
+  {
+    "id": "A3_Q_CHALLENGE",
+    "parentId": "A3_Q2",
+    "type": "question",
+    "text": "If your main work today was delayed by a week, who would feel it first?",
+    "options": [
+      "Mostly me",
+      "My manager or team",
+      "A specific person relying on it",
+      "The end user or customer",
+      "I’m not sure"
+    ],
+    "signal": [
+      "axis3:self",
+      "axis3:team",
+      "axis3:individual",
+      "axis3:system",
+      "axis3:self"
+    ]
+  },
+
+  {
+    "id": "A3_DECISION",
+    "parentId": "A3_Q_CHALLENGE",
+    "type": "decision",
+    "rules": [
+      {
+        "if": "axis3.system > axis3.team && axis3.system > axis3.self",
+        "goTo": "A3_R_SYSTEM"
+      },
+      {
+        "if": "axis3.team >= axis3.individual && axis3.team >= axis3.self",
+        "goTo": "A3_R_TEAM"
+      },
+      {
+        "if": "axis3.self >= axis3.team",
+        "goTo": "A3_R_SELF"
+      }
+    ]
+  },
+
+  {
+    "id": "A3_R_SYSTEM",
+    "type": "reflection",
+    "text": "You oriented toward the bigger picture today — thinking beyond immediate tasks to broader impact."
+  },
+
+  {
+    "id": "A3_R_TEAM",
+    "type": "reflection",
+    "text": "Your focus included shared outcomes and team impact — balancing individual effort with collective progress."
+  },
+
+  {
+    "id": "A3_R_SELF",
+    "type": "reflection",
+    "text": "Much of your attention stayed close to your own responsibilities. That’s natural — expanding outward slightly can shift perspective."
+  },
+
+  {
+    "id": "SUMMARY",
+    "parentId": "A3_R_SYSTEM",
+    "type": "summary",
+    "text": "You started by describing today as '{A1_OPEN.answer}', and when challenges came up, you chose to '{A1_Q2_RESPONSE.answer}'. In how you worked with others, you leaned toward '{A2_Q1.answer}'. Together, these show how you balanced control, contribution, and perspective today."
+  },
+
+  {
+    "id": "END",
+    "parentId": "SUMMARY",
+    "type": "end",
+    "text": "Reflection complete. See you tomorrow."
+  }
+]
