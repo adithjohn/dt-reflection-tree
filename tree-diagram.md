@@ -1,58 +1,109 @@
 ```mermaid
 graph TD
+    %% Node Definitions
+    START([START: Good evening]) 
+    A1_OPEN[A1_OPEN: How was your day?]
+    A1_ROUTE{A1_ROUTE: Branching}
+    
+    %% Axis 1: Locus (Parallel Paths)
+    subgraph Axis_1_Locus [Axis 1: Victim vs Victor]
+        A1_Q1_H[A1_Q1_HIGH: Response to planning]
+        A1_Q2_H[A1_Q2_HIGH: Response to challenge]
+        A1_Q3_H[A1_Q3_HIGH: Influence]
+        A1_D_H{A1_DECISION_HIGH}
 
-START --> A1_OPEN
-A1_OPEN --> A1_ROUTE
+        A1_Q1_L[A1_Q1_LOW: Response to difficulty]
+        A1_Q2_L[A1_Q2_LOW: Response to challenge]
+        A1_Q3_L[A1_Q3_LOW: Influence]
+        A1_D_L{A1_DECISION_LOW}
 
-A1_ROUTE -->|Productive/Mixed| A1_Q1_BEHAVIOR
-A1_ROUTE -->|Frustrating/Draining| A1_Q1_BEHAVIOR_LOW
+        A1_R_INT[Reflection: Internal Locus]
+        A1_R_EXT[Reflection: External Locus]
+        A1_R_MIX[Reflection: Mixed Locus]
+    end
 
-A1_Q1_BEHAVIOR --> A1_Q2_RESPONSE
-A1_Q1_BEHAVIOR_LOW --> A1_Q2_RESPONSE_LOW
+    BRIDGE_1_2[[BRIDGE_1_2: Agency to Contribution]]
 
-A1_Q2_RESPONSE --> A1_Q3_WHY
-A1_Q2_RESPONSE_LOW --> A1_Q3_WHY_LOW
+    %% Axis 2: Orientation (Linear Path to Decision)
+    subgraph Axis_2_Orientation [Axis 2: Contribution vs Entitlement]
+        A2_Q1[A2_Q1: Interaction approach]
+        A2_Q2[A2_Q2: Going beyond]
+        A2_Q3[A2_Q3: Source of effort]
+        A2_D{A2_DECISION}
+        
+        A2_R_CON[Reflection: Contribution]
+        A2_R_ENT[Reflection: Entitlement]
+        A2_R_NEU[Reflection: Neutral]
+    end
 
-A1_Q3_WHY --> A1_DECISION
-A1_Q3_WHY_LOW --> A1_DECISION_LOW
+    BRIDGE_2_3[[BRIDGE_2_3: Broadening the Lens]]
 
-A1_DECISION --> A1_R_INT
-A1_DECISION --> A1_R_EXT
-A1_DECISION --> A1_R_MIXED
+    %% Axis 3: Radius (Linear Path to Decision)
+    subgraph Axis_3_Radius [Axis 3: Self-Centrism vs Altrocentrism]
+        A3_Q1[A3_Q1: Most central today?]
+        A3_Q2[A3_Q2: Who was impacted?]
+        A3_D{A3_DECISION}
 
-A1_DECISION_LOW --> A1_R_INT
-A1_DECISION_LOW --> A1_R_EXT
-A1_DECISION_LOW --> A1_R_MIXED
+        A3_R_SYS[Reflection: System Impact]
+        A3_R_TEAM[Reflection: Team Impact]
+        A3_R_SELF[Reflection: Self Impact]
+    end
 
-A1_R_INT --> BRIDGE_1_2
-A1_R_EXT --> BRIDGE_1_2
-A1_R_MIXED --> BRIDGE_1_2
+    SUMMARY[SUMMARY: The Mirror]
+    END([END: Session Complete])
 
-BRIDGE_1_2 --> A2_Q1
-A2_Q1 --> A2_Q2
-A2_Q2 --> A2_Q3_WHY
-A2_Q3_WHY --> A2_DECISION
+    %% Connections
+    START --> A1_OPEN
+    A1_OPEN --> A1_ROUTE
 
-A2_DECISION --> A2_R_CONTRIB
-A2_DECISION --> A2_R_ENT
-A2_DECISION --> A2_R_NEUTRAL
+    %% A1 High Branch
+    A1_ROUTE -- "Productive/Mixed" --> A1_Q1_H
+    A1_Q1_H --> A1_Q2_H
+    A1_Q2_H --> A1_Q3_H
+    A1_Q3_H --> A1_D_H
+    A1_D_H --> A1_R_INT
+    A1_D_H --> A1_R_EXT
+    A1_D_H --> A1_R_MIX
 
-A2_R_CONTRIB --> BRIDGE_2_3
-A2_R_ENT --> BRIDGE_2_3
-A2_R_NEUTRAL --> BRIDGE_2_3
+    %% A1 Low Branch
+    A1_ROUTE -- "Frustrating/Draining" --> A1_Q1_L
+    A1_Q1_L --> A1_Q2_L
+    A1_Q2_L --> A1_Q3_L
+    A1_Q3_L --> A1_D_L
+    A1_D_L --> A1_R_INT
+    A1_D_L --> A1_R_EXT
+    A1_D_L --> A1_R_MIX
 
-BRIDGE_2_3 --> A3_Q1
-A3_Q1 --> A3_Q2
-A3_Q2 --> A3_Q_CHALLENGE
-A3_Q_CHALLENGE --> A3_DECISION
+    %% Transitions to A2
+    A1_R_INT & A1_R_EXT & A1_R_MIX --> BRIDGE_1_2
+    BRIDGE_1_2 --> A2_Q1
+    
+    %% A2 Flow
+    A2_Q1 --> A2_Q2
+    A2_Q2 --> A2_Q3
+    A2_Q3 --> A2_D
+    A2_D --> A2_R_CON
+    A2_D --> A2_R_ENT
+    A2_D --> A2_R_NEU
 
-A3_DECISION --> A3_R_SYSTEM
-A3_DECISION --> A3_R_TEAM
-A3_DECISION --> A3_R_SELF
+    %% Transitions to A3
+    A2_R_CON & A2_R_ENT & A2_R_NEU --> BRIDGE_2_3
+    BRIDGE_2_3 --> A3_Q1
 
-A3_R_SYSTEM --> SUMMARY
-A3_R_TEAM --> SUMMARY
-A3_R_SELF --> SUMMARY
+    %% A3 Flow
+    A3_Q1 --> A3_Q2
+    A3_Q2 --> A3_D
+    A3_D --> A3_R_SYS
+    A3_D --> A3_R_TEAM
+    A3_D --> A3_R_SELF
 
-SUMMARY --> END
-```
+    %% Exit Flow
+    A3_R_SYS & A3_R_TEAM & A3_R_SELF --> SUMMARY
+    SUMMARY --> END
+
+    %% Styling
+    style A1_ROUTE fill:#f9f,stroke:#333,stroke-width:2px
+    style A2_D fill:#f9f,stroke:#333,stroke-width:2px
+    style A3_D fill:#f9f,stroke:#333,stroke-width:2px
+    style BRIDGE_1_2 fill:#bbf,stroke:#333,stroke-dasharray: 5 5
+    style BRIDGE_2_3 fill:#bbf,stroke:#333,stroke-dasharray: 5 5
