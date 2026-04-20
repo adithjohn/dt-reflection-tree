@@ -1,3 +1,4 @@
+```mermaid
 graph TD
 
 START --> A1_OPEN
@@ -54,3 +55,4 @@ A3_R_TEAM --> SUMMARY
 A3_R_SELF --> SUMMARY
 
 SUMMARY --> END
+```
